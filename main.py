@@ -6,15 +6,15 @@ import random
 import math
 
 def warshall(R,n,k,i,j):
-    if(k==n or i==n or j==n):
+    if(k<0 or i<0 or j<0):
         return
 
+    warshall(R, n, k-1, i, j)
+    warshall(R, n, k, i-1, j)
+    warshall(R, n, k, i, j-1)
+    
     if(R[i][j]or(R[i][k]and R[k][j])):
         R[i][j]=1
-
-    warshall(R, n, k, i, j+1)
-    warshall(R, n, k, i+1, j)
-    warshall(R, n, k+1, i, j)
 
     return R
 
@@ -77,7 +77,7 @@ G = nx.MultiDiGraph(directed=True)
 show_Graph(y,R0,G,"İlk Durum")
 printList(R0,"R0")
 
-R=warshall(R0,y,0,0,0)
+R=warshall(R0,y,y-1,y-1,y-1)
 
 print("R:", R)
 
